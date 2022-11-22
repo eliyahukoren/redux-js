@@ -1,0 +1,37 @@
+:root {
+	--dark--bg: #343a40;
+	--dark--color: #fff;
+}
+
+body {
+	transition: .2s all ease-in-out;
+}
+
+body.dark {
+	background: var(--dark--bg);
+	color: var(--dark--color);
+}
+
+body.dark hr {
+	border-top: 1px solid rgba(0, 0, 0, .9);
+}
+
+body.dark .card {
+	background: var(--dark--bg);
+	border: 1px solid rgba(0, 0, 0, .875);
+}
+
+body.dark input {
+	background-color: var(--dark--bg);
+	color: var(--dark--color);
+}
+body.dark input:focus {
+	background-color: var(--dark--bg);
+	color: var(--dark--color);
+}
+
+.heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
