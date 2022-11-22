@@ -39,18 +39,9 @@ const applyCounter = () => counter.textContent = store.getState().counter.toStri
 const applyWeight = () => weight.textContent = store.getState().weight.toString();
 const applyWeightAmount = (amount) => document.getElementById('weightAmount').value = amount;
 const applyTheme = () => document.body.className = store.getState().theme.value;
-const disableButtons = (value = false) => {
+const disableButtons = (value) => {
 	allButtons.forEach(b => b.disabled = value);
 }
-
-
-store.subscribe(() => {
-	applyCounter();
-	applyWeight();
-	applyTheme();
-	applyWeightAmount(0);
-	disableButtons();
-})
 
 function eventListener(act){
 	const actions = {
@@ -58,29 +49,37 @@ function eventListener(act){
 			const weightAmount = Number(document.getElementById('weightAmount').value);
 			store.dispatch(changeWeight(weightAmount))
 		}, 
-
+		
 		"add" : () => store.dispatch(increment()),
-
+		
 		"sub": () => store.dispatch(decrement()),
-
+		
 		"theme": () => {
 			const lightTheme = document.body.classList.contains('light');
 			const newTheme = (lightTheme)
-				? 'dark'
-				: 'light'
-
+			? 'dark'
+			: 'light'
+			
 			store.dispatch(changeTheme(newTheme))
 		},
-
+		
 		"async" : () => {
-			disableButtons(true);
 			store.dispatch(asyncIncrement(1000))
 		},
 	}
-
+	
 	if (typeof (actions[act]) === 'function')
-		actions[act]();
+	actions[act]();
 }
+
+store.subscribe(() => {
+	const state = store.getState();
+	applyCounter();
+	applyWeight();
+	applyTheme();
+	applyWeightAmount(0);
+	disableButtons(state.theme.disabled);
+})
 
 // Initial call
 store.dispatch({ type: 'INIT_APPLICATION' })

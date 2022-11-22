@@ -1,4 +1,4 @@
-import { CHANGE_THEME, CHANGE_WEIGHT, DECREMENT, INCREMENT } from "./types";
+import { CHANGE_THEME, CHANGE_WEIGHT, DECREMENT, DISABLE_BUTTONS, ENABLE_BUTTONS, INCREMENT } from "./types";
 
 export function increment(){
 	return {
@@ -19,6 +19,18 @@ export function changeWeight(amount){
 	}
 }
 
+export function enableButtons(){
+	return {
+		type: ENABLE_BUTTONS
+	}
+}
+
+export function disableButtons(){
+	return {
+		type: DISABLE_BUTTONS
+	}
+}
+
 export function changeTheme(theme){
 	return {
 		type: CHANGE_THEME,
@@ -28,8 +40,10 @@ export function changeTheme(theme){
 
 export function asyncIncrement( delay = 2000){
 	return function(dispatch){
+		dispatch(disableButtons())
 		setTimeout(() => {
 			dispatch(increment())
+			dispatch(enableButtons())
 		}, delay)
 	}
 }
